@@ -1,8 +1,8 @@
-from car_fleet.models.driver_license import DriverLicense
 import unittest
 from datetime import date
 from dateutil.relativedelta import relativedelta
-from car_fleet.models.person import Person
+from car_fleet.person import Person
+from car_fleet.driver_license import DriverLicense
 
 
 class PersonTests(unittest.TestCase):

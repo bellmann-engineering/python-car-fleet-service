@@ -3,7 +3,7 @@ from enum import IntFlag
 
 class DriverLicense(IntFlag):
     """
-    Führscheinklasssen in Deutschland
+    Führerscheinklasssen in Deutschland
     """
     AM = 0
     A1 = 1
