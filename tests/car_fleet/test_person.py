@@ -20,4 +20,4 @@ class PersonTests(unittest.TestCase):
         self.assertEqual(expected, max_mustermann.age)
         self.assertEqual(expected_first_name, max_mustermann.first_name)
         self.assertEqual(expected_last_name, max_mustermann.last_name)
-        self.assertEqual(expected_license, max_mustermann.license)
+        self.assertEqual(expected_license, max_mustermann.driver_license)

@@ -1,3 +1,4 @@
+from car_fleet.driver_license import DriverLicense
 from datetime import date
 from dataclasses import dataclass, field
 
@@ -10,11 +11,19 @@ class Vehicle:
     manufacturer: str = field(default=None, compare=False)
     manufacture_date: date = field(default=None, compare=False)
     model_name: str = field(default=None, compare=False)
+    driver_license: DriverLicense = field(default=None, compare=False)
+
+    def can_drive(self, drivers_license: DriverLicense) -> bool:
+        print(type(self))
+        print(type(self.driver_license))
+        print(type(drivers_license))
+
+        return (self.driver_license in drivers_license)
 
 
 @dataclass
 class Car(Vehicle):
-    doors: int = field(default=3, compare=False)
+    pass
 
 
 @dataclass

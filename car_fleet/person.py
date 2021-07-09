@@ -10,7 +10,7 @@ class Person:
     first_name: str
     last_name: str
     birth_date: date
-    license: DriverLicense
+    driver_license: DriverLicense
 
     @property
     def age(self) -> int:
