@@ -1,9 +1,9 @@
-from car_fleet.driver_license import DriverLicense
 import unittest
 from datetime import date
 
-from car_fleet.vehicle import Vehicle, Car, Truck, Motorcycle
+from car_fleet.driver_license import DriverLicense
 from car_fleet.person import Person
+from car_fleet.vehicle import *
 
 
 def _get_person() -> Person:
@@ -18,79 +18,59 @@ def _get_person() -> Person:
 
 
 class VehicleTests(unittest.TestCase):
-    def test_should_be_equal_when_vin_is_equal(self):
-        expected = Vehicle(vin="1234567890", manufacturer="Test")
+    def test_a_valid_vehicle_type_should_be_set(self):
+        self.assertRaises(
+            InvaildVehicleTypeError,
+            Vehicle,
+            "123123",
+            4
+        )
 
-        actual = Vehicle(vin="1234567890", manufacturer="123")
+    def test_driver_license_should_be_set(self):
+        self.assertRaises(
+            DriverLicenseRequiredError,
+            Vehicle,
+            "011233495839845",
+            3
+        )
 
-        self.assertEqual(expected, actual)
-        self.assertTrue(expected == actual)
-
-
-class CarTests(unittest.TestCase):
-    def test_should_be_equal_when_vin_is_equal(self):
-        expected = Car(vin="1234567890", manufacturer="Test")
-
-        actual = Car(vin="1234567890", manufacturer="123")
-
-        self.assertEqual(expected, actual)
-        self.assertTrue(expected == actual)
-
-    def test_should_require_driver_license(self):
+    def test_can_drive_should_return_true_when_driver_has_license(self):
         person = _get_person()
 
-        actual = Car(
+        car = Vehicle(
             vin="1234567890",
+            vehicle_type=VehicleType.Car,
             driver_license=DriverLicense.B
         )
 
-        self.assertTrue(actual.can_drive(person.driver_license))
+        self.assertTrue(car.can_drive(person.driver_license))
 
-
-class TruckTests(unittest.TestCase):
-    def test_should_be_equal_when_vin_is_equal(self):
-        expected = Truck(vin="1234567890", manufacturer="Test")
-
-        actual = Truck(
-            vin="1234567890",
-            driver_license=DriverLicense.C1
-        )
-
-        self.assertEqual(expected, actual)
-        self.assertTrue(expected == actual)
-
-    def test_should_require_driver_license(self):
+    def test_can_drive_should_return_true_when_driver_has_license(self):
         person = _get_person()
 
-        actual = Truck(
+        car = Vehicle(
             vin="1234567890",
-            driver_license=DriverLicense.C
+            vehicle_type=VehicleType.Car,
+            driver_license=DriverLicense.C1E,
+            manufacturer="Volkswagen"
         )
 
-        self.assertTrue(actual.can_drive(person.driver_license))
+        self.assertFalse(car.can_drive(person.driver_license))
 
-
-class MotorcycleTests(unittest.TestCase):
     def test_should_be_equal_when_vin_is_equal(self):
-        expected = Motorcycle(
+        audi = Vehicle(
             vin="1234567890",
-            manufacturer="Test"
+            vehicle_type=VehicleType.Car,
+            driver_license=DriverLicense.B,
+            manufacturer="Audi"
         )
 
-        actual = Motorcycle(
+        vw = Vehicle(
             vin="1234567890",
-            manufacturer="Brumm Brumm GmbH"
+            vehicle_type=VehicleType.Truck,
+            driver_license=DriverLicense.C,
+            manufacturer="Volkswagen"
         )
 
-        self.assertEqual(expected, actual)
-        self.assertTrue(expected == actual)
-
-    def test_should_require_driver_license(self):
-        person = _get_person()
-
-        actual = Motorcycle(
-            vin="1234567890",
-            driver_license=DriverLicense.A
-        )
-
-        self.assertTrue(actual.can_drive(person.driver_license))
+        self.assertEqual(audi, vw)
+        self.assertTrue(audi == vw)
